@@ -1,10 +1,10 @@
 import { useState, useEffect } from "react";
-import Movie from "./Movie";
+import Movie from "../Components/Movie";
 
 const KEY = "dff672db6eef3cfbdbea7e88887d0d25";
 const API_URL = "https://api.themoviedb.org/3/";
 
-function App() {
+function Home() {
   const [genres, setGenres] = useState([]);
   const [loading, setLoading] = useState({ movies: true, genres: true });
   const [movies, setMovies] = useState([]);
@@ -34,10 +34,12 @@ function App() {
   }, []);
 
   const getGenreNames = (genreIds) => {
-    return genreIds.map((id) => {
-      const genre = genres.find((g) => g.id === id);
-      return genre ? genre.name : "";
-    });
+    return genreIds
+      .map((id) => {
+        const genre = genres.find((g) => g.id === id);
+        return genre ? genre.name : "";
+      })
+      .join(", ");
   };
 
   return (
@@ -51,8 +53,9 @@ function App() {
               key={movie.id}
               poster_path={movie.poster_path}
               title={movie.title}
-              overview={movie.overview}
+              release_date={movie.release_date}
               genre_names={getGenreNames(movie.genre_ids)}
+              overview={movie.overview}
             />
           ))}
         </div>
@@ -61,4 +64,4 @@ function App() {
   );
 }
 
-export default App;
+export default Home;
